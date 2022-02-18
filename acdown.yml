@@ -1,0 +1,61 @@
+esphome:
+  name: downstairsac
+  platform: ESP32
+  board: nodemcu-32s
+
+wifi:
+  ssid: "Bill Wi the Science-Fi"
+  password: "Vivalasvegans"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Downstairsac Fallback Hotspot"
+    password: "uZ0JS1MwiGce"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+remote_transmitter:
+  pin: GPIO33
+  carrier_duty_percent: 50%
+  id: transmitter
+
+remote_receiver:
+  pin: 
+    number: GPIO35
+    inverted: True
+    mode: INPUT_PULLUP
+  #dump: raw
+  id: rcvr
+  #buffer_size: 40kB
+  #memory_blocks: 4
+  idle: 25000us
+  #filter: 30us
+  #tolerance: 30%
+
+climate:
+  - platform: frigidaire
+    name: "DownstairsAC"
+    receiver_id: rcvr
+    transmitter_id: transmitter
+    unit_of_measurement: "°F"
+    sensor: sensi_temp
+
+sensor:
+  - platform: homeassistant
+    id: sensi_temp
+    entity_id: climate.sensi_170a39
+    attribute: current_temperature
+    unit_of_measurement: "°F"
+    filters:
+      - calibrate_linear:
+          - 32.0 -> 0.0
+          - 212.0 -> 100.0
+

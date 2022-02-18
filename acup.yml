@@ -1,0 +1,35 @@
+esphome:
+  name: upstairsac
+  platform: ESP32
+  board: nodemcu-32s
+
+wifi:
+  ssid: "Bill Wi the Science-Fi"
+  password: "Vivalasvegans"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Upstairsac Fallback Hotspot"
+    password: "uZ0JS1MwiGce"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+remote_transmitter:
+  pin: GPIO33
+  carrier_duty_percent: 50%
+  id: transmitter
+
+climate:
+  - platform: frigidaire
+    name: "UpstairsAC"
+    transmitter_id: transmitter
+    unit_of_measurement: "°F"
+
