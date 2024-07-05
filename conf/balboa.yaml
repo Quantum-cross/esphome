@@ -1,0 +1,45 @@
+esphome:
+  name: balboa_thingy
+
+esp32:
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: Bill Wi the Science-Fi
+  password: "Vivalasvegans"
+  output_power: 20.0dB
+  fast_connect: true
+  power_save_mode: none
+  manual_ip:
+    static_ip: 192.168.1.115
+    gateway: 192.168.1.1
+    subnet: 255.255.255.0
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    password: ousratnuawrf
+
+captive_portal:
+
+logger:
+  level: VERBOSE
+
+# Enable Home Assistant API & OTA Updates
+api:
+
+ota:
+  platform: esphome
+
+uart:
+  id: balboa_uart
+  baud_rate: 115200
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+
+balboa:
+  uart_id: balboa_uart
+
+fan:
+  - platform: balboa
+    id: pump1
+    name: butt
